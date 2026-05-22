@@ -1,6 +1,9 @@
+require("dotenv").config();
+
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
+
 
 const app = express();
 
@@ -45,9 +48,9 @@ JOIN certificate c ON s.id = c.student_id WHERE c.certificate_number = ? and s.d
             });
         }
 
-        if (results.length === 0) {
+        if (!results || results.length === 0) {
 
-            return res.status(401).json({
+            return res.status(404).json({
                 error: "Invalid certificate number or DOB"
             });
         }
